@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Data Kamar dan Fasilitas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            width: 60%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Form Tambah Data Kamar</h2>
+    <div class="form-container">
+        <form id="formKamar" onsubmit="return validateKamarForm()">
+            <div class="form-group">
+                <label for="namaKamar">Nama Kamar:</label>
+                <input type="text" id="namaKamar" name="namaKamar">
+                <span class="error" id="errorNamaKamar">Nama kamar wajib diisi!</span>
+            </div>
+            <div class="form-group">
+                <label for="tipeKamar">Tipe Kamar:</label>
+                <select id="tipeKamar" name="tipeKamar">
+                    <option value="">-- Pilih Tipe Kamar --</option>
+                    <option value="Standar">Standar</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                </select>
+                <span class="error" id="errorTipeKamar">Tipe kamar wajib dipilih!</span>
+            </div>
+            <div class="form-group">
+                <label for="hargaKamar">Harga Kamar (Rp):</label>
+                <input type="number" id="hargaKamar" name="hargaKamar">
+                <span class="error" id="errorHargaKamar">Harga kamar wajib diisi dan harus berupa angka!</span>
+            </div>
+            <button type="submit">Tambah Data Kamar</button>
+        </form>
+    </div>
+
+    <h2>Form Tambah Data Fasilitas</h2>
+    <div class="form-container">
+        <form id="formFasilitas" onsubmit="return validateFasilitasForm()">
+            <div class="form-group">
+                <label for="namaFasilitas">Nama Fasilitas:</label>
+                <input type="text" id="namaFasilitas" name="namaFasilitas">
+                <span class="error" id="errorNamaFasilitas">Nama fasilitas wajib diisi!</span>
+            </div>
+            <div class="form-group">
+                <label for="deskripsiFasilitas">Deskripsi Fasilitas:</label>
+                <input type="text" id="deskripsiFasilitas" name="deskripsiFasilitas">
+                <span class="error" id="errorDeskripsiFasilitas">Deskripsi fasilitas wajib diisi!</span>
+            </div>
+            <button type="submit">Tambah Data Fasilitas</button>
+        </form>
+    </div>
+
+    <script>
+        // Validasi Form Kamar
+        function validateKamarForm() {
+            let namaKamar = document.getElementById("namaKamar").value.trim();
+            let tipeKamar = document.getElementById("tipeKamar").value.trim();
+            let hargaKamar = document.getElementById("hargaKamar").value.trim();
+            let valid = true;
+
+            // Reset error messages
+            document.getElementById("errorNamaKamar").style.display = "none";
+            document.getElementById("errorTipeKamar").style.display = "none";
+            document.getElementById("errorHargaKamar").style.display = "none";
+
+            // Nama Kamar Validation
+            if (namaKamar === "") {
+                document.getElementById("errorNamaKamar").style.display = "block";
+                valid = false;
+            }
+
+            // Tipe Kamar Validation
+            if (tipeKamar === "") {
+                document.getElementById("errorTipeKamar").style.display = "block";
+                valid = false;
+            }
+
+            // Harga Kamar Validation
+            if (hargaKamar === "" || isNaN(hargaKamar) || parseInt(hargaKamar) <= 0) {
+                document.getElementById("errorHargaKamar").style.display = "block";
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        // Validasi Form Fasilitas
+        function validateFasilitasForm() {
+            let namaFasilitas = document.getElementById("namaFasilitas").value.trim();
+            let deskripsiFasilitas = document.getElementById("deskripsiFasilitas").value.trim();
+            let valid = true;
+
+            // Reset error messages
+            document.getElementById("errorNamaFasilitas").style.display = "none";
+            document.getElementById("errorDeskripsiFasilitas").style.display = "none";
+
+            // Nama Fasilitas Validation
+            if (namaFasilitas === "") {
+                document.getElementById("errorNamaFasilitas").style.display = "block";
+                valid = false;
+            }
+
+            // Deskripsi Fasilitas Validation
+            if (deskripsiFasilitas === "") {
+                document.getElementById("errorDeskripsiFasilitas").style.display = "block";
+                valid = false;
+            }
+
+            return valid;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Penjualan Barang</title>
+    <link rel="stylesheet" href="../css/pt2.css">
+</head>
+<body>
+    <form>
+        <h2>Data Penjualan Barang</h2>
+        <div class="form-group">
+            <label for="kodeBarang">Kode Barang:</label>
+            <select id="kodeBarang" onchange="updateBarang()">
+                <option value="">-- Pilih Kode Barang --</option>
+                <option value="B001">B001</option>
+                <option value="B002">B002</option>
+                <option value="B003">B003</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="jumlahBeli">Jumlah Beli:</label>
+            <input type="number" id="jumlahBeli" min="1" oninput="hitungNota()">
+        </div>
+    
+        <div class="form-group">
+            <label for="namaBarang">Nama Barang:</label>
+            <input type="text" id="namaBarang" readonly>
+        </div>
+    
+        <div class="form-group">
+            <label for="harga">Harga:</label>
+            <input type="text" id="harga" readonly>
+        </div>
+    
+        <div class="form-group">
+            <label for="jumlahBayar">Jumlah Bayar:</label>
+            <input type="text" id="jumlahBayar" readonly>
+        </div>
+    
+        <div class="form-group">
+            <label for="potongan">Potongan:</label>
+            <input type="text" id="potongan" readonly>
+        </div>
+    
+        <div class="form-group">
+            <label for="totalBayar">Total Bayar:</label>
+            <input type="text" id="totalBayar" readonly>
+        </div>
+    
+        <button type="button" onclick="hasilAkhir()">TAMPILKAN</button>
+    </form>
+    
+    <div id="nota" class="nota-container"></div>
+
+    <script src="../js/pt2.js"></script>
+</body>
+</html>

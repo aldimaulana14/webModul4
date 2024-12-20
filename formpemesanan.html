@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Pemesanan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 20px;
+      }
+
+      .input,
+      .input-jk,
+      .check {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+
+      .tombol {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 48%;
+      }
+
+      button[type="button"] {
+        background-color: blue;
+        color: white;
+      }
+
+      button[type="reset"] {
+        background-color: gold;
+      }
+
+      #resume {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Form Pemesanan</h1>
+      <form id="formPemesanan">
+        <div class="input">
+          <label for="id">Id Pemesan:</label>
+          <input type="number" id="id" required />
+        </div>
+        <div class="input">
+          <label for="nama">Nama Pemesan:</label>
+          <input type="text" id="nama" required />
+        </div>
+        <div class="input">
+          <label for="noIdentitas">Nomor Identitas:</label>
+          <input type="number" id="noIdentitas" required minlength="16" maxlength="16"/>
+          <div class="error" id="errorNoIdentitas"></div>
+        </div>
+        <div class="input-jk">
+          <label>Jenis Kelamin:</label>
+          <input type="radio" name="jenkel" value="Laki-laki" required /> Laki-laki <input type="radio" name="jenkel" value="Perempuan" required /> Perempuan
+        </div>
+        <div class="input">
+          <label for="kamar">Tipe Kamar:</label>
+          <select id="kamar" onchange="updateHarga()" required>
+            <option value="">--Pilih--</option>
+            <option value="standard">Standard</option>
+            <option value="deluxe">Deluxe</option>
+            <option value="family">Family</option>
+          </select>
+        </div>
+        <div class="input">
+          <label for="harga">Harga:</label>
+          <input type="text" id="harga" readonly />
+        </div>
+        <div class="input">
+          <label for="tanggal">Tanggal Pesan:</label>
+          <input type="date" id="tanggal" required />
+        </div>
+        <div class="input">
+          <label for="durasi">Durasi Menginap (Hari):</label>
+          <input type="number" id="durasi" min="1" required oninput="hitungNota()" />
+        </div>
+        <div class="check">
+          <label for="breakfast">Termasuk Breakfast:</label>
+          <input type="checkbox" id="breakfast" onchange="hitungNota()" /> Ya
+        </div>
+        <div class="input">
+          <label for="totalBayar">Total Bayar:</label>
+          <input type="text" id="totalBayar" readonly />
+        </div>
+        <div class="tombol">
+          <button type="button" onclick="resumePemesanan()">Simpan</button>
+          <button type="reset">Batal</button>
+        </div>
+      </form>
+      <div id="resume"></div>
+    </div>
+
+    <script>
+      function updateHarga() {
+        const kamar = document.getElementById("kamar").value;
+        let hargaKamar = 0;
+
+        switch (kamar) {
+          case "standard":
+            hargaKamar = 80000;
+            break;
+          case "deluxe":
+            hargaKamar = 100000;
+            break;
+          case "family":
+            hargaKamar = 120000;
+            break;
+        }
+
+        document.getElementById("harga").value = hargaKamar;
+        hitungNota();
+      }
+
+      function hitungNota() {
+        const harga = parseInt(document.getElementById("harga").value) || 0;
+        const durasi = parseInt(document.getElementById("durasi").value) || 0;
+        const includeBreakfast = document.getElementById("breakfast").checked;
+
+        let total = harga * durasi;
+
+        // Diskon jika menginap lebih dari 3 hari
+        if (durasi > 3) {
+          total *= 0.9; // Diskon 10%
+        }
+
+        // Tambahan untuk breakfast
+        if (includeBreakfast) {
+          total += 80000;
+        }
+
+        document.getElementById("totalBayar").value = "Rp " + total.toLocaleString();
+      }
+
+      function resumePemesanan() {
+        const noIdentitas = document.getElementById("noIdentitas").value;
+
+        // Validasi No Identitas harus 16 digit
+        if (noIdentitas.length !== 16) {
+          document.getElementById("errorNoIdentitas").innerText = "Nomor Identitas harus 16 digit.";
+          return;
+        } else {
+          document.getElementById("errorNoIdentitas").innerText = "";
+        }
+
+        const nama = document.getElementById("nama").value;
+        const jenkel = document.querySelector('input[name="jenkel"]:checked').value;
+        const kamar = document.getElementById("kamar").value;
+        const durasi = document.getElementById("durasi").value;
+        const totalBayar = document.getElementById("totalBayar").value;
+
+        document.getElementById("resume").innerHTML = `
+        <h3>Resume Pemesanan</h3>
+        <p><strong>Nama Pemesan:</strong> ${nama}</p>
+        <p><strong>Nomor Identitas:</strong> ${noIdentitas}</p>
+        <p><strong>Jenis Kelamin:</strong> ${jenkel}</p>
+        <p><strong>Tipe Kamar:</strong> ${kamar}</p>
+        <p><strong>Durasi Menginap:</strong> ${durasi} hari</p>
+        <p><strong>Total Bayar:</strong> ${totalBayar}</p>
+      `;
+      }
+    </script>
+  </body>
+</html>

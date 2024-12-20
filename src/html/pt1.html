@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Gaji Karyawan</title>
+    <link rel="stylesheet" href="../css/pt1.css">
+</head>
+<body>
+    <form name="form1">
+        <h2>PERHITUNGAN GAJI</h2>
+        <div class="form-group">
+            <label for="golongan">Golongan</label>
+            <select name="pb" id="golongan">
+                <option value="kosong">--Pilih Salah Satu--</option>
+                <option value="1">I</option>
+                <option value="2">II</option>
+                <option value="3">III</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 5px;">
+            <label for="jumlahAnak">Jumlah Anak</label>
+            <input type="number" name="anak" id="jumlahAnak" min="0" required>
+        </div>
+
+        <div class="button-group">
+            <button type="button" onclick="hitungGaji()">Hitung</button>
+            <button type="reset">Cancel</button>
+        </div>
+
+        <div class="form-group">
+            <label for="gajiPokok">Gaji Pokok</label>
+            <input type="text" id="gajiPokok" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="tunjangan">Tunjangan</label>
+            <input type="text" id="tunjangan" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="gajiBersih">Gaji Bersih</label>
+            <input type="text" id="gajiBersih" readonly>
+        </div>
+    </form>
+
+    <script src="../js/pt1.js"></script> 
+</body>
+</html>
